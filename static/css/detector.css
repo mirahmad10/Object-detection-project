@@ -1,0 +1,91 @@
+body {
+    background-color: rgb(6, 6, 71);
+    margin: 0px;
+    overflow: hidden; /* Prevents scrolling */
+}
+
+.startBtn,
+.stopBtn {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: all 0.7s ease;
+    font-size: 20px;
+    font-family: arial;
+    border-radius: 5px;
+}
+
+.startBtn:hover,
+.stopBtn:hover {
+    box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
+    transform: scale(1.2);
+}
+
+.stopBtn {
+    background-color: red;
+}
+
+.startBtn:active {
+    background-color: rgb(4, 95, 4);
+    transition: 0.1s;
+    margin-top: 23px;
+    margin-left: 5px;
+    box-shadow: none;
+}
+
+.stopBtn:active {
+    background-color: rgb(151, 0, 0);
+    transition: 0.1s;
+    margin-top: 23px;
+    margin-left: 5px;
+    box-shadow: none;
+}
+
+.title {
+    color: rgb(137, 212, 255);
+    font-family: arial;
+    font-size: 40px;
+}
+
+.video-grid,
+.container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.video-grid {
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.canvas {
+    z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.overlay {
+    position: absolute;
+    z-index: 1;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    width: 100%;
+}
+
+.webcamDisplay {
+    display: none;
+}
