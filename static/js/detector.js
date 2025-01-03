@@ -1,4 +1,5 @@
 toggleBtn.addEventListener('click', ()=> {
+    toggleWebcam()
     if(toggleBtn.classList.contains('startBtn')) {
         toggleBtn.innerText = 'Stop webcam';
         toggleBtn.classList.add('stopBtn');
@@ -11,22 +12,33 @@ toggleBtn.addEventListener('click', ()=> {
         toggleBtn.classList.remove('stopBtn');
         webcam.classList.add('webcamDisplay');
     }
-    toggleWebcam()
 })
 
 let webcamRunning = false;
-    
+
 async function toggleWebcam() {
-    const button = document.getElementById('toggleBtn');
+    const action = webcamRunning ? 'stop' : 'start';
+    const webcamElement = document.getElementById('webcam');
+    const response = await fetch('/toggle_webcam', {
+        method: 'POST',
+        body: JSON.stringify({ action }),
+        headers: { 'Content-Type': 'application/json' },
+    });
 
-    if (webcamRunning) {
-        await fetch('/toggle_webcam', { method: 'POST', body: JSON.stringify({ action: 'stop' }), headers: { 'Content-Type': 'application/json' } });
-    } else {
-        await fetch('/toggle_webcam', { method: 'POST', body: JSON.stringify({ action: 'start' }), headers: { 'Content-Type': 'application/json' } });
+    const data = await response.json();
+    if (data.status === 'success') {
+        if (data.webcam_active === true) {
+            webcamElement.src = '/toggle_webcam';
+            webcamRunning = data.webcam_active;
+        } else if (data.webcam_active === false) {
+            const videoElement = document.getElementById('webcam');
+            webcamElement.src = '';
+            webcamRunning = data.webcam_active;
+        }
+    } else if (data.status === 'error') {
+        alert(data.message);
     }
-
-    webcamRunning = !webcamRunning;
-};
+}
 
 var canvas = document.getElementById('canvas');
 var cntx = canvas.getContext('2d');
