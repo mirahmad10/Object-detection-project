@@ -33,14 +33,13 @@ def generate_frames():
                 yield error_frame('Error: Unable to read camera')
         except Exception as err:
             yield error_frame(err.__str__())
-            continue
+            
         try:
             if counter%7==0:
                 results.clear()
                 results.append(list(model.predict(img, stream=True, verbose=False)))
         except Exception as err:
             yield error_frame(err.__str__())
-            continue
 
         try:
             if results:
@@ -57,7 +56,6 @@ def generate_frames():
                             cv2.putText(img, text, text_loc, cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
         except Exception as err:
             yield error_frame(err.__str__())
-            continue
         
         _, img = cv2.imencode('.jpg', img)
         img = img.tobytes()
